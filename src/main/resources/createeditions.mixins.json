@@ -1,0 +1,22 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.ducko.createeditions.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "BacktankBlockEntityMixin",
+    "BacktankItemMixin",
+    "BacktankUtilMixin"
+  ],
+  "client": [
+    "BacktankItemMixin",
+    "BacktankUtilMixin"
+  ],
+  "server": [
+    "BacktankItemMixin",
+    "BacktankUtilMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
