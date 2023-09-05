@@ -1,14 +1,27 @@
 package net.ducko.createeditions;
 
+import com.simibubi.create.AllTags;
 import com.simibubi.create.Create;
 
+import com.simibubi.create.content.equipment.armor.BacktankItem;
+import com.simibubi.create.content.equipment.armor.BacktankUtil;
+import com.simibubi.create.content.equipment.goggles.GogglesItem;
+import dev.emi.trinkets.api.SlotReference;
+import dev.emi.trinkets.api.TrinketComponent;
+import dev.emi.trinkets.api.TrinketsApi;
 import io.github.fabricators_of_create.porting_lib.util.EnvExecutor;
 import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.resources.ResourceLocation;
 
+import net.minecraft.util.Tuple;
+import net.minecraft.world.item.ItemStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class CreateEditions implements ModInitializer {
     public static final String ID = "createeditions";
@@ -22,6 +35,23 @@ public class CreateEditions implements ModInitializer {
                 () -> () -> "{} is accessing Porting Lib from the client!",
                 () -> () -> "{} is accessing Porting Lib from the server!"
         ), NAME);
+
+        GogglesItem.addIsWearingPredicate(player ->
+            TrinketsApi.getTrinketComponent(player).get().isEquipped(itemStack -> itemStack.getItem() instanceof BacktankItem)
+        );
+
+        BacktankUtil.addBacktankSupplier(entity -> {
+            List<ItemStack> stacks = new ArrayList<>();
+            if (TrinketsApi.getTrinketComponent(entity).isPresent()) {
+                TrinketComponent component = TrinketsApi.getTrinketComponent(entity).get();
+                for (Tuple<SlotReference, ItemStack> tuple : component.getAllEquipped()) {
+                    ItemStack itemStack = tuple.getB();
+                    if (!itemStack.isEmpty() && AllTags.AllItemTags.PRESSURIZED_AIR_SOURCES.matches(itemStack))
+                        stacks.add(itemStack);
+                }
+            }
+            return stacks;
+        });
     }
 
     public static ResourceLocation id(String path) {

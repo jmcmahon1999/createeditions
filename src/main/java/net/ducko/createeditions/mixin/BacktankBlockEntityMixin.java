@@ -26,11 +26,14 @@ public abstract class BacktankBlockEntityMixin extends KineticBlockEntity implem
         super(typeIn, pos, state);
     }
 
-
-    @Shadow
+    @Shadow(
+            remap = false
+    )
     private int capacityEnchantLevel;
 
-    @Shadow private Component defaultName;
+    @Shadow(
+            remap = false
+    ) private Component defaultName;
 
     @Inject(
             method = "getDefaultName",

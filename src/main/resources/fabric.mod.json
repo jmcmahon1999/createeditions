@@ -1,25 +1,25 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "createeditions",
   "version": "${version}",
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "Create Editions",
+  "description": "A simple tweak and quality of life mod for Create (Fabric).",
   "authors": [
     "Me!"
   ],
   "contact": {
-    "sources": "https://github.com/Fabricators-of-Create/create-fabric-addon-template"
+    "sources": "https://github.com/jmcmahon1999/createeditions"
   },
   "license": "CC0",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/createeditions/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.example.modid.ExampleMod"
+      "net.ducko.createeditions.CreateEditions"
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "createeditions.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=${fabric_loader_version}",

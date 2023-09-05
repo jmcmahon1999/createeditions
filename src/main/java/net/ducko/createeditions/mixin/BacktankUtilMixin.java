@@ -3,9 +3,8 @@ package net.ducko.createeditions.mixin;
 import com.simibubi.create.AllEnchantments;
 import com.simibubi.create.content.equipment.armor.BacktankUtil;
 import com.simibubi.create.infrastructure.config.AllConfigs;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -25,7 +24,7 @@ public abstract class BacktankUtilMixin {
     )
     private static void injectMaxAir(ItemStack backtank, CallbackInfoReturnable<Integer> callback) {
         if (backtank.getItem().getDescriptionId().equals("item.create.netherite_backtank")) {
-            callback.setReturnValue(maxAir(backtank.getEnchantmentLevel(AllEnchantments.CAPACITY.get()))
+            callback.setReturnValue(maxAir(EnchantmentHelper.getItemEnchantmentLevel(AllEnchantments.CAPACITY.get(), backtank))
                     + AllConfigs.server().equipment.airInBacktank.get() * 2);
         }
     }
