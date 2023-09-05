@@ -21,7 +21,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class CreateEditions implements ModInitializer {
     public static final String ID = "createeditions";
@@ -36,9 +35,13 @@ public class CreateEditions implements ModInitializer {
                 () -> () -> "{} is accessing Porting Lib from the server!"
         ), NAME);
 
-        GogglesItem.addIsWearingPredicate(player ->
-            TrinketsApi.getTrinketComponent(player).get().isEquipped(itemStack -> itemStack.getItem() instanceof BacktankItem)
-        );
+        GogglesItem.addIsWearingPredicate(player -> {
+            if (TrinketsApi.getTrinketComponent(player).isPresent()) {
+                return TrinketsApi.getTrinketComponent(player).get().isEquipped(itemStack ->
+                        itemStack.getItem() instanceof BacktankItem);
+            }
+            return false;
+        });
 
         BacktankUtil.addBacktankSupplier(entity -> {
             List<ItemStack> stacks = new ArrayList<>();

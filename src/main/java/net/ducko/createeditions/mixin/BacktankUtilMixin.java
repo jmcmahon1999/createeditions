@@ -17,7 +17,7 @@ import static com.simibubi.create.content.equipment.armor.BacktankUtil.maxAir;
 public abstract class BacktankUtilMixin {
 
     @Inject(
-            method = "maxAir",
+            method = "maxAir(Lnet/minecraft/world/item/ItemStack;)I",
             at = @At("HEAD"),
             remap = false,
             cancellable = true
